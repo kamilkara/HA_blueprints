@@ -7,11 +7,11 @@ blueprint:
     - Requires the "Sonoff LAN" HACS integration in auto mode (local-only mode will not work).  
       (More info: https://github.com/AlexxIT/SonoffLAN)
   domain: automation
-  author: Modified by KamilKara (original by Erick Rodriguez)
+  author: Kamil Kara 
   input:
     sonoff_sensor:
       name: Sonoff R5 Sensor
-      description: "Select the Sonoff R5 sensor entity (filtered for Sonoff R5 only)"
+      description: "Select the Sonoff R5 sensor entity"
       selector:
         entity:
           domain: sensor
