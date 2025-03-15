@@ -13,24 +13,34 @@ blueprint:
         entity:
           domain: sensor
 
+    # Automation Mode Selector
+    automation_mode:
+      name: Automation Mode
+      description: "Select the execution mode for this automation"
+      default: queued
+      selector:
+        select:
+          options:
+            - "single"
+            - "queued"
+            - "restart"
+            - "parallel"
+
     # Button 1
     button_1_single:
       name: Button 1 - Single Press Action
-      description: "Choose action for Button 1 Single Press"
       default: []
       selector:
         action: {}
 
     button_1_double:
       name: Button 1 - Double Press Action
-      description: "Choose action for Button 1 Double Press"
       default: []
       selector:
         action: {}
 
     button_1_hold:
       name: Button 1 - Hold Press Action
-      description: "Choose action for Button 1 Hold Press"
       default: []
       selector:
         action: {}
@@ -132,7 +142,7 @@ blueprint:
 
   source_url: "https://github.com/YOUR_GITHUB_LINK_HERE"
 
-mode: single
+mode: !input automation_mode  # Dynamically set mode from user input
 
 trigger:
   - platform: state
@@ -159,7 +169,6 @@ trigger:
 
 action:
   - choose:
-      # Button 1 Actions
       - conditions:
           - condition: state
             entity_id: !input sonoff_sensor
@@ -178,7 +187,6 @@ action:
             state: "button_1_hold"
         sequence: !input button_1_hold
 
-      # Button 2 Actions
       - conditions:
           - condition: state
             entity_id: !input sonoff_sensor
@@ -197,7 +205,6 @@ action:
             state: "button_2_hold"
         sequence: !input button_2_hold
 
-      # Button 3 Actions
       - conditions:
           - condition: state
             entity_id: !input sonoff_sensor
@@ -216,7 +223,6 @@ action:
             state: "button_3_hold"
         sequence: !input button_3_hold
 
-      # Button 4 Actions
       - conditions:
           - condition: state
             entity_id: !input sonoff_sensor
@@ -235,7 +241,6 @@ action:
             state: "button_4_hold"
         sequence: !input button_4_hold
 
-      # Button 5 Actions
       - conditions:
           - condition: state
             entity_id: !input sonoff_sensor
@@ -254,7 +259,6 @@ action:
             state: "button_5_hold"
         sequence: !input button_5_hold
 
-      # Button 6 Actions
       - conditions:
           - condition: state
             entity_id: !input sonoff_sensor
