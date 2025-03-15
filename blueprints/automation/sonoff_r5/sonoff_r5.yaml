@@ -13,18 +13,7 @@ blueprint:
         entity:
           domain: sensor
 
-    # Automation Mode Selector
-    automation_mode:
-      name: Automation Mode
-      description: "Select the execution mode for this automation"
-      default: queued
-      selector:
-        select:
-          options:
-            - "single"
-            - "queued"
-            - "restart"
-            - "parallel"
+    
 
     # Button 1
     button_1_single:
@@ -276,3 +265,16 @@ action:
             entity_id: !input sonoff_sensor
             state: "button_6_hold"
         sequence: !input button_6_hold
+        
+    # Automation Mode Selector
+    automation_mode:
+      name: Automation Mode
+      description: "Select the execution mode for this automation"
+      default: queued
+      selector:
+        select:
+          options:
+            - "single"
+            - "queued"
+            - "restart"
+            - "parallel"
