@@ -27,13 +27,13 @@ blueprint:
             - "restart"
             - "parallel"
 
-    # --- Button 1 ---
+    # Button 1
     enable_mode_button_1_single:
       name: Enable Custom Mode for Button 1 Single Press
       default: false
       selector:
         boolean:
-    
+
     mode_button_1_single:
       name: Mode for Button 1 Single Press
       default: queued
@@ -97,16 +97,15 @@ blueprint:
       selector:
         action: {}
 
-    # --- Repeat for Buttons 2-6 ---
-{% for button in range(2, 7) %}
-    enable_mode_button_{{ button }}_single:
-      name: Enable Custom Mode for Button {{ button }} Single Press
+    # Repeat for Buttons 2-6
+    enable_mode_button_2_single:
+      name: Enable Custom Mode for Button 2 Single Press
       default: false
       selector:
         boolean:
 
-    mode_button_{{ button }}_single:
-      name: Mode for Button {{ button }} Single Press
+    mode_button_2_single:
+      name: Mode for Button 2 Single Press
       default: queued
       selector:
         select:
@@ -116,20 +115,20 @@ blueprint:
             - "restart"
             - "parallel"
 
-    button_{{ button }}_single:
-      name: Button {{ button }} - Single Press Action
+    button_2_single:
+      name: Button 2 - Single Press Action
       default: []
       selector:
         action: {}
 
-    enable_mode_button_{{ button }}_double:
-      name: Enable Custom Mode for Button {{ button }} Double Press
+    enable_mode_button_2_double:
+      name: Enable Custom Mode for Button 2 Double Press
       default: false
       selector:
         boolean:
 
-    mode_button_{{ button }}_double:
-      name: Mode for Button {{ button }} Double Press
+    mode_button_2_double:
+      name: Mode for Button 2 Double Press
       default: queued
       selector:
         select:
@@ -139,20 +138,20 @@ blueprint:
             - "restart"
             - "parallel"
 
-    button_{{ button }}_double:
-      name: Button {{ button }} - Double Press Action
+    button_2_double:
+      name: Button 2 - Double Press Action
       default: []
       selector:
         action: {}
 
-    enable_mode_button_{{ button }}_hold:
-      name: Enable Custom Mode for Button {{ button }} Hold Press
+    enable_mode_button_2_hold:
+      name: Enable Custom Mode for Button 2 Hold Press
       default: false
       selector:
         boolean:
 
-    mode_button_{{ button }}_hold:
-      name: Mode for Button {{ button }} Hold Press
+    mode_button_2_hold:
+      name: Mode for Button 2 Hold Press
       default: queued
       selector:
         select:
@@ -162,12 +161,11 @@ blueprint:
             - "restart"
             - "parallel"
 
-    button_{{ button }}_hold:
-      name: Button {{ button }} - Hold Press Action
+    button_2_hold:
+      name: Button 2 - Hold Press Action
       default: []
       selector:
         action: {}
-{% endfor %}
 
   source_url: "https://github.com/kamilkara/HA_blueprints/blob/main/blueprints/automation/sonoff_r5/sonoff_r5.yaml"
 
@@ -183,76 +181,62 @@ trigger:
       - "button_2_single"
       - "button_2_double"
       - "button_2_hold"
-      - "button_3_single"
-      - "button_3_double"
-      - "button_3_hold"
-      - "button_4_single"
-      - "button_4_double"
-      - "button_4_hold"
-      - "button_5_single"
-      - "button_5_double"
-      - "button_5_hold"
-      - "button_6_single"
-      - "button_6_double"
-      - "button_6_hold"
 
 action:
   - choose:
-{% for button in range(1, 7) %}
-      # Button {{ button }} - Single Press
+      # Button 1 - Single Press
       - conditions:
           - condition: state
             entity_id: !input sonoff_sensor
-            state: "button_{{ button }}_single"
+            state: "button_1_single"
         sequence:
           - if:
               - condition: template
-                value_template: "{{ iinput.enable_mode_button_{{ button }}_single }}"
+                value_template: "{{ input.enable_mode_button_1_single }}"
             then:
               - service: automation.turn_on
                 data:
-                  mode: !input mode_button_{{ button }}_single
+                  mode: !input mode_button_1_single
             else:
               - service: automation.turn_on
                 data:
                   mode: !input global_automation_mode
-          - choose: !input button_{{ button }}_single
+          - choose: !input button_1_single
 
-      # Button {{ button }} - Double Press
+      # Button 1 - Double Press
       - conditions:
           - condition: state
             entity_id: !input sonoff_sensor
-            state: "button_{{ button }}_double"
+            state: "button_1_double"
         sequence:
           - if:
               - condition: template
-                value_template: "{{ iinput.enable_mode_button_{{ button }}_double }}"
+                value_template: "{{ input.enable_mode_button_1_double }}"
             then:
               - service: automation.turn_on
                 data:
-                  mode: !input mode_button_{{ button }}_double
+                  mode: !input mode_button_1_double
             else:
               - service: automation.turn_on
                 data:
                   mode: !input global_automation_mode
-          - choose: !input button_{{ button }}_double
+          - choose: !input button_1_double
 
-      # Button {{ button }} - Hold Press
+      # Button 1 - Hold Press
       - conditions:
           - condition: state
             entity_id: !input sonoff_sensor
-            state: "button_{{ button }}_hold"
+            state: "button_1_hold"
         sequence:
           - if:
               - condition: template
-                value_template: "{{ iinput.enable_mode_button_{{ button }}_hold }}"
+                value_template: "{{ input.enable_mode_button_1_hold }}"
             then:
               - service: automation.turn_on
                 data:
-                  mode: !input mode_button_{{ button }}_hold
+                  mode: !input mode_button_1_hold
             else:
               - service: automation.turn_on
                 data:
                   mode: !input global_automation_mode
-          - choose: !input button_{{ button }}_hold
-{% endfor %}
+          - choose: !input button_1_hold
