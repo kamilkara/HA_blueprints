@@ -1,10 +1,9 @@
 blueprint:
   name: Sonoff R5 Button Controller
   description: |
-    Control lights and switches using Sonoff R5 buttons.
-    - Single press: Toggles a light
-    - Double press: Toggles another switch
-    - Hold press: Toggles a different switch
+    Control multiple lights and switches using the Sonoff R5 buttons.
+    - Each button has 3 actions: Single press, Double press, and Hold press.
+    - Assign different devices or services to each action.
   domain: automation
   input:
     sonoff_sensor:
@@ -14,28 +13,124 @@ blueprint:
         entity:
           domain: sensor
 
-    light_entry:
-      name: Entry Light
-      description: "Select the light to toggle with a single press"
+    # Button 1
+    button_1_single:
+      name: Button 1 - Single Press Action
+      description: "Choose action for Button 1 Single Press"
+      default: []
       selector:
-        entity:
-          domain: light
+        action: {}
 
-    switch_climate:
-      name: Climate Switch
-      description: "Select the switch to toggle with a double press"
+    button_1_double:
+      name: Button 1 - Double Press Action
+      description: "Choose action for Button 1 Double Press"
+      default: []
       selector:
-        entity:
-          domain: switch
+        action: {}
 
-    switch_wall:
-      name: Wall Switch
-      description: "Select the switch to toggle with a hold press"
+    button_1_hold:
+      name: Button 1 - Hold Press Action
+      description: "Choose action for Button 1 Hold Press"
+      default: []
       selector:
-        entity:
-          domain: switch
+        action: {}
 
-  source_url: "https://github.com/YOUR_GITHUB_LINK_HERE"  # Optional, if you want to share this blueprint
+    # Button 2
+    button_2_single:
+      name: Button 2 - Single Press Action
+      default: []
+      selector:
+        action: {}
+
+    button_2_double:
+      name: Button 2 - Double Press Action
+      default: []
+      selector:
+        action: {}
+
+    button_2_hold:
+      name: Button 2 - Hold Press Action
+      default: []
+      selector:
+        action: {}
+
+    # Button 3
+    button_3_single:
+      name: Button 3 - Single Press Action
+      default: []
+      selector:
+        action: {}
+
+    button_3_double:
+      name: Button 3 - Double Press Action
+      default: []
+      selector:
+        action: {}
+
+    button_3_hold:
+      name: Button 3 - Hold Press Action
+      default: []
+      selector:
+        action: {}
+
+    # Button 4
+    button_4_single:
+      name: Button 4 - Single Press Action
+      default: []
+      selector:
+        action: {}
+
+    button_4_double:
+      name: Button 4 - Double Press Action
+      default: []
+      selector:
+        action: {}
+
+    button_4_hold:
+      name: Button 4 - Hold Press Action
+      default: []
+      selector:
+        action: {}
+
+    # Button 5
+    button_5_single:
+      name: Button 5 - Single Press Action
+      default: []
+      selector:
+        action: {}
+
+    button_5_double:
+      name: Button 5 - Double Press Action
+      default: []
+      selector:
+        action: {}
+
+    button_5_hold:
+      name: Button 5 - Hold Press Action
+      default: []
+      selector:
+        action: {}
+
+    # Button 6
+    button_6_single:
+      name: Button 6 - Single Press Action
+      default: []
+      selector:
+        action: {}
+
+    button_6_double:
+      name: Button 6 - Double Press Action
+      default: []
+      selector:
+        action: {}
+
+    button_6_hold:
+      name: Button 6 - Hold Press Action
+      default: []
+      selector:
+        action: {}
+
+  source_url: "https://github.com/YOUR_GITHUB_LINK_HERE"
 
 mode: single
 
@@ -64,153 +159,116 @@ trigger:
 
 action:
   - choose:
+      # Button 1 Actions
       - conditions:
           - condition: state
             entity_id: !input sonoff_sensor
             state: "button_1_single"
-        sequence:
-          - service: light.toggle
-            target:
-              entity_id: !input light_entry
+        sequence: !input button_1_single
+
       - conditions:
           - condition: state
             entity_id: !input sonoff_sensor
             state: "button_1_double"
-        sequence:
-          - service: switch.toggle
-            target:
-              entity_id: !input switch_climate
+        sequence: !input button_1_double
+
       - conditions:
           - condition: state
             entity_id: !input sonoff_sensor
             state: "button_1_hold"
-        sequence:
-          - service: switch.toggle
-            target:
-              entity_id: !input switch_wall
+        sequence: !input button_1_hold
 
-      # Repeat for buttons 2 to 6
+      # Button 2 Actions
       - conditions:
           - condition: state
             entity_id: !input sonoff_sensor
             state: "button_2_single"
-        sequence:
-          - service: light.toggle
-            target:
-              entity_id: !input light_entry
+        sequence: !input button_2_single
+
       - conditions:
           - condition: state
             entity_id: !input sonoff_sensor
             state: "button_2_double"
-        sequence:
-          - service: switch.toggle
-            target:
-              entity_id: !input switch_climate
+        sequence: !input button_2_double
+
       - conditions:
           - condition: state
             entity_id: !input sonoff_sensor
             state: "button_2_hold"
-        sequence:
-          - service: switch.toggle
-            target:
-              entity_id: !input switch_wall
+        sequence: !input button_2_hold
 
+      # Button 3 Actions
       - conditions:
           - condition: state
             entity_id: !input sonoff_sensor
             state: "button_3_single"
-        sequence:
-          - service: light.toggle
-            target:
-              entity_id: !input light_entry
+        sequence: !input button_3_single
+
       - conditions:
           - condition: state
             entity_id: !input sonoff_sensor
             state: "button_3_double"
-        sequence:
-          - service: switch.toggle
-            target:
-              entity_id: !input switch_climate
+        sequence: !input button_3_double
+
       - conditions:
           - condition: state
             entity_id: !input sonoff_sensor
             state: "button_3_hold"
-        sequence:
-          - service: switch.toggle
-            target:
-              entity_id: !input switch_wall
+        sequence: !input button_3_hold
 
+      # Button 4 Actions
       - conditions:
           - condition: state
             entity_id: !input sonoff_sensor
             state: "button_4_single"
-        sequence:
-          - service: light.toggle
-            target:
-              entity_id: !input light_entry
+        sequence: !input button_4_single
+
       - conditions:
           - condition: state
             entity_id: !input sonoff_sensor
             state: "button_4_double"
-        sequence:
-          - service: switch.toggle
-            target:
-              entity_id: !input switch_climate
+        sequence: !input button_4_double
+
       - conditions:
           - condition: state
             entity_id: !input sonoff_sensor
             state: "button_4_hold"
-        sequence:
-          - service: switch.toggle
-            target:
-              entity_id: !input switch_wall
+        sequence: !input button_4_hold
 
+      # Button 5 Actions
       - conditions:
           - condition: state
             entity_id: !input sonoff_sensor
             state: "button_5_single"
-        sequence:
-          - service: light.toggle
-            target:
-              entity_id: !input light_entry
-      - conditions:
-          - condition: state
-            entity_id: !input sonoff_sensor
-            state: "button_5_double"
-        sequence:
-          - service: switch.toggle
-            target:
-              entity_id: !input switch_climate
-      - conditions:
-          - condition: state
-            entity_id: !input sonoff_sensor
-            state: "button_5_hold"
-        sequence:
-          - service: switch.toggle
-            target:
-              entity_id: !input switch_wall
+        sequence: !input button_5_single
 
       - conditions:
           - condition: state
             entity_id: !input sonoff_sensor
+            state: "button_5_double"
+        sequence: !input button_5_double
+
+      - conditions:
+          - condition: state
+            entity_id: !input sonoff_sensor
+            state: "button_5_hold"
+        sequence: !input button_5_hold
+
+      # Button 6 Actions
+      - conditions:
+          - condition: state
+            entity_id: !input sonoff_sensor
             state: "button_6_single"
-        sequence:
-          - service: light.toggle
-            target:
-              entity_id: !input light_entry
+        sequence: !input button_6_single
+
       - conditions:
           - condition: state
             entity_id: !input sonoff_sensor
             state: "button_6_double"
-        sequence:
-          - service: switch.toggle
-            target:
-              entity_id: !input switch_climate
+        sequence: !input button_6_double
+
       - conditions:
           - condition: state
             entity_id: !input sonoff_sensor
             state: "button_6_hold"
-        sequence:
-          - service: switch.toggle
-            target:
-              entity_id: !input switch_wall
+        sequence: !input button_6_hold
