@@ -169,7 +169,7 @@ blueprint:
         action: {}
 {% endfor %}
 
-  source_url: "https://github.com/YOUR_GITHUB_LINK_HERE"
+  source_url: "https://github.com/kamilkara/HA_blueprints/blob/main/blueprints/automation/sonoff_r5/sonoff_r5.yaml"
 
 mode: !input global_automation_mode  # Default mode unless overridden
 
