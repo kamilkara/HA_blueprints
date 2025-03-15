@@ -4,7 +4,6 @@ blueprint:
     Control multiple lights and switches using the Sonoff R5 buttons.
     - Each button has 3 actions: Single press, Double press, and Hold press.
     - Assign different devices or services to each action.
-    - Each action can optionally have a custom automation mode.
   domain: automation
   input:
     sonoff_sensor:
@@ -14,10 +13,10 @@ blueprint:
         entity:
           domain: sensor
 
-    # Global Automation Mode (default for all actions unless overridden)
-    global_automation_mode:
-      name: Default Automation Mode
-      description: "Select the default automation mode for all actions."
+    # Automation Mode Selector
+    automation_mode:
+      name: Automation Mode
+      description: "Select the execution mode for this automation"
       default: queued
       selector:
         select:
@@ -27,46 +26,12 @@ blueprint:
             - "restart"
             - "parallel"
 
-    # --- Button 1 ---
-    enable_mode_button_1_single:
-      name: Enable Custom Mode for Button 1 Single Press
-      default: false
-      selector:
-        boolean:
-    
-    mode_button_1_single:
-      name: Mode for Button 1 Single Press
-      default: queued
-      selector:
-        select:
-          options:
-            - "single"
-            - "queued"
-            - "restart"
-            - "parallel"
-
+    # Button 1
     button_1_single:
       name: Button 1 - Single Press Action
       default: []
       selector:
         action: {}
-
-    enable_mode_button_1_double:
-      name: Enable Custom Mode for Button 1 Double Press
-      default: false
-      selector:
-        boolean:
-
-    mode_button_1_double:
-      name: Mode for Button 1 Double Press
-      default: queued
-      selector:
-        select:
-          options:
-            - "single"
-            - "queued"
-            - "restart"
-            - "parallel"
 
     button_1_double:
       name: Button 1 - Double Press Action
@@ -74,104 +39,110 @@ blueprint:
       selector:
         action: {}
 
-    enable_mode_button_1_hold:
-      name: Enable Custom Mode for Button 1 Hold Press
-      default: false
-      selector:
-        boolean:
-
-    mode_button_1_hold:
-      name: Mode for Button 1 Hold Press
-      default: queued
-      selector:
-        select:
-          options:
-            - "single"
-            - "queued"
-            - "restart"
-            - "parallel"
-
     button_1_hold:
       name: Button 1 - Hold Press Action
       default: []
       selector:
         action: {}
 
-    # --- Repeat for Buttons 2-6 ---
-{% for button in range(2, 7) %}
-    enable_mode_button_{{ button }}_single:
-      name: Enable Custom Mode for Button {{ button }} Single Press
-      default: false
-      selector:
-        boolean:
-
-    mode_button_{{ button }}_single:
-      name: Mode for Button {{ button }} Single Press
-      default: queued
-      selector:
-        select:
-          options:
-            - "single"
-            - "queued"
-            - "restart"
-            - "parallel"
-
-    button_{{ button }}_single:
-      name: Button {{ button }} - Single Press Action
+    # Button 2
+    button_2_single:
+      name: Button 2 - Single Press Action
       default: []
       selector:
         action: {}
 
-    enable_mode_button_{{ button }}_double:
-      name: Enable Custom Mode for Button {{ button }} Double Press
-      default: false
-      selector:
-        boolean:
-
-    mode_button_{{ button }}_double:
-      name: Mode for Button {{ button }} Double Press
-      default: queued
-      selector:
-        select:
-          options:
-            - "single"
-            - "queued"
-            - "restart"
-            - "parallel"
-
-    button_{{ button }}_double:
-      name: Button {{ button }} - Double Press Action
+    button_2_double:
+      name: Button 2 - Double Press Action
       default: []
       selector:
         action: {}
 
-    enable_mode_button_{{ button }}_hold:
-      name: Enable Custom Mode for Button {{ button }} Hold Press
-      default: false
-      selector:
-        boolean:
-
-    mode_button_{{ button }}_hold:
-      name: Mode for Button {{ button }} Hold Press
-      default: queued
-      selector:
-        select:
-          options:
-            - "single"
-            - "queued"
-            - "restart"
-            - "parallel"
-
-    button_{{ button }}_hold:
-      name: Button {{ button }} - Hold Press Action
+    button_2_hold:
+      name: Button 2 - Hold Press Action
       default: []
       selector:
         action: {}
-{% endfor %}
 
-  source_url: "https://github.com/kamilkara/HA_blueprints/blob/main/blueprints/automation/sonoff_r5/sonoff_r5.yaml"
+    # Button 3
+    button_3_single:
+      name: Button 3 - Single Press Action
+      default: []
+      selector:
+        action: {}
 
-mode: !input global_automation_mode  # Default mode unless overridden
+    button_3_double:
+      name: Button 3 - Double Press Action
+      default: []
+      selector:
+        action: {}
+
+    button_3_hold:
+      name: Button 3 - Hold Press Action
+      default: []
+      selector:
+        action: {}
+
+    # Button 4
+    button_4_single:
+      name: Button 4 - Single Press Action
+      default: []
+      selector:
+        action: {}
+
+    button_4_double:
+      name: Button 4 - Double Press Action
+      default: []
+      selector:
+        action: {}
+
+    button_4_hold:
+      name: Button 4 - Hold Press Action
+      default: []
+      selector:
+        action: {}
+
+    # Button 5
+    button_5_single:
+      name: Button 5 - Single Press Action
+      default: []
+      selector:
+        action: {}
+
+    button_5_double:
+      name: Button 5 - Double Press Action
+      default: []
+      selector:
+        action: {}
+
+    button_5_hold:
+      name: Button 5 - Hold Press Action
+      default: []
+      selector:
+        action: {}
+
+    # Button 6
+    button_6_single:
+      name: Button 6 - Single Press Action
+      default: []
+      selector:
+        action: {}
+
+    button_6_double:
+      name: Button 6 - Double Press Action
+      default: []
+      selector:
+        action: {}
+
+    button_6_hold:
+      name: Button 6 - Hold Press Action
+      default: []
+      selector:
+        action: {}
+
+  source_url: "https://raw.githubusercontent.com/kamilkara/HA_blueprints/refs/heads/main/blueprints/automation/sonoff_r5/sonoff_r5.yaml"
+
+mode: !input automation_mode  # Dynamically set mode from user input
 
 trigger:
   - platform: state
@@ -198,61 +169,110 @@ trigger:
 
 action:
   - choose:
-{% for button in range(1, 7) %}
-      # Button {{ button }} - Single Press
       - conditions:
           - condition: state
             entity_id: !input sonoff_sensor
-            state: "button_{{ button }}_single"
-        sequence:
-          - if:
-              - condition: template
-                value_template: "{{ iinput.enable_mode_button_{{ button }}_single }}"
-            then:
-              - service: automation.turn_on
-                data:
-                  mode: !input mode_button_{{ button }}_single
-            else:
-              - service: automation.turn_on
-                data:
-                  mode: !input global_automation_mode
-          - choose: !input button_{{ button }}_single
+            state: "button_1_single"
+        sequence: !input button_1_single
 
-      # Button {{ button }} - Double Press
       - conditions:
           - condition: state
             entity_id: !input sonoff_sensor
-            state: "button_{{ button }}_double"
-        sequence:
-          - if:
-              - condition: template
-                value_template: "{{ iinput.enable_mode_button_{{ button }}_double }}"
-            then:
-              - service: automation.turn_on
-                data:
-                  mode: !input mode_button_{{ button }}_double
-            else:
-              - service: automation.turn_on
-                data:
-                  mode: !input global_automation_mode
-          - choose: !input button_{{ button }}_double
+            state: "button_1_double"
+        sequence: !input button_1_double
 
-      # Button {{ button }} - Hold Press
       - conditions:
           - condition: state
             entity_id: !input sonoff_sensor
-            state: "button_{{ button }}_hold"
-        sequence:
-          - if:
-              - condition: template
-                value_template: "{{ iinput.enable_mode_button_{{ button }}_hold }}"
-            then:
-              - service: automation.turn_on
-                data:
-                  mode: !input mode_button_{{ button }}_hold
-            else:
-              - service: automation.turn_on
-                data:
-                  mode: !input global_automation_mode
-          - choose: !input button_{{ button }}_hold
-{% endfor %}
+            state: "button_1_hold"
+        sequence: !input button_1_hold
+
+      - conditions:
+          - condition: state
+            entity_id: !input sonoff_sensor
+            state: "button_2_single"
+        sequence: !input button_2_single
+
+      - conditions:
+          - condition: state
+            entity_id: !input sonoff_sensor
+            state: "button_2_double"
+        sequence: !input button_2_double
+
+      - conditions:
+          - condition: state
+            entity_id: !input sonoff_sensor
+            state: "button_2_hold"
+        sequence: !input button_2_hold
+
+      - conditions:
+          - condition: state
+            entity_id: !input sonoff_sensor
+            state: "button_3_single"
+        sequence: !input button_3_single
+
+      - conditions:
+          - condition: state
+            entity_id: !input sonoff_sensor
+            state: "button_3_double"
+        sequence: !input button_3_double
+
+      - conditions:
+          - condition: state
+            entity_id: !input sonoff_sensor
+            state: "button_3_hold"
+        sequence: !input button_3_hold
+
+      - conditions:
+          - condition: state
+            entity_id: !input sonoff_sensor
+            state: "button_4_single"
+        sequence: !input button_4_single
+
+      - conditions:
+          - condition: state
+            entity_id: !input sonoff_sensor
+            state: "button_4_double"
+        sequence: !input button_4_double
+
+      - conditions:
+          - condition: state
+            entity_id: !input sonoff_sensor
+            state: "button_4_hold"
+        sequence: !input button_4_hold
+
+      - conditions:
+          - condition: state
+            entity_id: !input sonoff_sensor
+            state: "button_5_single"
+        sequence: !input button_5_single
+
+      - conditions:
+          - condition: state
+            entity_id: !input sonoff_sensor
+            state: "button_5_double"
+        sequence: !input button_5_double
+
+      - conditions:
+          - condition: state
+            entity_id: !input sonoff_sensor
+            state: "button_5_hold"
+        sequence: !input button_5_hold
+
+      - conditions:
+          - condition: state
+            entity_id: !input sonoff_sensor
+            state: "button_6_single"
+        sequence: !input button_6_single
+
+      - conditions:
+          - condition: state
+            entity_id: !input sonoff_sensor
+            state: "button_6_double"
+        sequence: !input button_6_double
+
+      - conditions:
+          - condition: state
+            entity_id: !input sonoff_sensor
+            state: "button_6_hold"
+        sequence: !input button_6_hold
