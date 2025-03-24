@@ -1,5 +1,5 @@
 blueprint:
-  name: Sonoff R5 Button Controller (Grouped)
+  name: Sonoff R5 Button Controller
   description: |
     Control multiple lights and switches using the Sonoff R5 buttons.
     - Grouped actions: Single press, Double press, and Hold press actions separated visually.
@@ -18,9 +18,10 @@ blueprint:
     ### ☝️ SINGLE PRESS GROUP HEADER
     single_press_header:
       name: "☝️ SINGLE PRESS ACTIONS"
-      description: "Define actions for each button single press:"
-      selector:
-        text: {}
+      description: |
+      Define actions for each button single press:
+      -------------------------------------------
+
 
     button_1_single:
       name: Button 1 - Single Press Action
@@ -61,9 +62,9 @@ blueprint:
     ### ✌️ DOUBLE PRESS GROUP HEADER
     double_press_header:
       name: "✌️ DOUBLE PRESS ACTIONS"
-      description: "Define actions for each button double press:"
-      selector:
-        text: {}
+      description: |
+      Define actions for each button double press:
+      -------------------------------------------
 
     button_1_double:
       name: Button 1 - Double Press Action
@@ -104,9 +105,9 @@ blueprint:
     ### ✋ HOLD PRESS GROUP HEADER
     hold_press_header:
       name: "✋ HOLD PRESS ACTIONS"
-      description: "Define actions for each button hold press:"
-      selector:
-        text: {}
+      description: |
+      Define actions for each button hold press:
+      ------------------------------------------
 
     button_1_hold:
       name: Button 1 - Hold Press Action
