@@ -21,7 +21,6 @@ blueprint:
       description: "Define actions for each button single press:"
       default: "Not required"
 
-
     button_1_single:
       name: Button 1 - Single Press Action
       default: []
