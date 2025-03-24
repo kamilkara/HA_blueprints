@@ -143,7 +143,7 @@ blueprint:
 
     automation_mode:
       name: Automation Mode
-      description: "Select the execution mode for this automation."
+      description: "Select the execution mode for this automation. (For more details, visit: https://www.home-assistant.io/docs/automation/modes/)"
       default: queued
       selector:
         select:
