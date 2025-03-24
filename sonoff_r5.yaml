@@ -18,9 +18,8 @@ blueprint:
     ### ☝️ SINGLE PRESS GROUP HEADER
     single_press_header:
       name: "☝️ SINGLE PRESS ACTIONS"
-      description: |
-      Define actions for each button single press:
-      -------------------------------------------
+      description: "Define actions for each button single press:"
+      default: "Not required"
 
 
     button_1_single:
@@ -62,9 +61,8 @@ blueprint:
     ### ✌️ DOUBLE PRESS GROUP HEADER
     double_press_header:
       name: "✌️ DOUBLE PRESS ACTIONS"
-      description: |
-      Define actions for each button double press:
-      -------------------------------------------
+      description: "Define actions for each button double press:"
+      default: "Not required"
 
     button_1_double:
       name: Button 1 - Double Press Action
@@ -105,9 +103,8 @@ blueprint:
     ### ✋ HOLD PRESS GROUP HEADER
     hold_press_header:
       name: "✋ HOLD PRESS ACTIONS"
-      description: |
-      Define actions for each button hold press:
-      ------------------------------------------
+      description: "Define actions for each button hold:"
+      default: "Not required"
 
     button_1_hold:
       name: Button 1 - Hold Press Action
