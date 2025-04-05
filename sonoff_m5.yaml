@@ -1,11 +1,8 @@
 blueprint:
-  name: Sonoff M5 3-Gang Button Controller (with Action Mode)
+  name: Sonoff M5 3-Gang Button Controller
   description: |
     Use the Sonoff M5 3-Gang smart switch to control lights, switches, or scenes.
-
-    - Choose between:
-      • Individual actions per button & press type
-      • A global toggle for all presses
+    - Each gang (button) supports single, double, and hold press actions.
     - Requires the "Sonoff LAN" HACS integration in auto mode.
   domain: automation
   author: Kamil Kara
@@ -18,31 +15,11 @@ blueprint:
           domain: sensor
           integration: sonoff
 
-    action_style:
-      name: Action Mode
-      description: Choose how this switch will behave
-      default: individual
-      selector:
-        select:
-          options:
-            - "individual"
-            - "global_toggle"
-
-    global_toggle_target:
-      name: Global Toggle Target
-      description: The light or switch to toggle when any button is pressed (used in global_toggle mode)
-      default: []
-      selector:
-        entity:
-          domain:
-            - light
-            - switch
-
     ### ☝️ SINGLE PRESS ACTIONS
     single_press_header:
       name: "☝️ SINGLE PRESS ACTIONS"
-      description: "Define actions for each gang single press (if using Individual mode)"
-      default: "Do not change"
+      description: "Define actions for each gang single press"
+      default: "Informational field — do not change"
       selector:
         text: {}
 
@@ -67,8 +44,8 @@ blueprint:
     ### ✌️ DOUBLE PRESS ACTIONS
     double_press_header:
       name: "✌️ DOUBLE PRESS ACTIONS"
-      description: "Define actions for each gang double press (if using Individual mode)"
-      default: "Do not change"
+      description: "Define actions for each gang double press"
+      default: "Informational field — do not change"
       selector:
         text: {}
 
@@ -93,8 +70,8 @@ blueprint:
     ### ✋ HOLD PRESS ACTIONS
     hold_press_header:
       name: "✋ HOLD PRESS ACTIONS"
-      description: "Define actions for each gang hold press (if using Individual mode)"
-      default: "Do not change"
+      description: "Define actions for each gang hold press"
+      default: "Informational field — do not change"
       selector:
         text: {}
 
@@ -145,71 +122,56 @@ trigger:
 
 action:
   - choose:
-      # GLOBAL TOGGLE path
       - conditions:
-          - condition: template
-            value_template: "{{ iif((states('input_select.action_style') == 'global_toggle'), true, false) }}"
-        sequence:
-          - service: homeassistant.toggle
-            target:
-              entity_id: !input global_toggle_target
+          - condition: state
+            entity_id: !input sonoff_sensor
+            state: "button_1_single"
+        sequence: !input button_1_single
 
-      # INDIVIDUAL ACTIONS path
       - conditions:
-          - condition: template
-            value_template: "{{ iif((states('input_select.action_style') == 'individual'), true, false) }}"
-        sequence:
-          - choose:
-              - conditions:
-                  - condition: state
-                    entity_id: !input sonoff_sensor
-                    state: "button_1_single"
-                sequence: !input button_1_single
+          - condition: state
+            entity_id: !input sonoff_sensor
+            state: "button_2_single"
+        sequence: !input button_2_single
 
-              - conditions:
-                  - condition: state
-                    entity_id: !input sonoff_sensor
-                    state: "button_2_single"
-                sequence: !input button_2_single
+      - conditions:
+          - condition: state
+            entity_id: !input sonoff_sensor
+            state: "button_3_single"
+        sequence: !input button_3_single
 
-              - conditions:
-                  - condition: state
-                    entity_id: !input sonoff_sensor
-                    state: "button_3_single"
-                sequence: !input button_3_single
+      - conditions:
+          - condition: state
+            entity_id: !input sonoff_sensor
+            state: "button_1_double"
+        sequence: !input button_1_double
 
-              - conditions:
-                  - condition: state
-                    entity_id: !input sonoff_sensor
-                    state: "button_1_double"
-                sequence: !input button_1_double
+      - conditions:
+          - condition: state
+            entity_id: !input sonoff_sensor
+            state: "button_2_double"
+        sequence: !input button_2_double
 
-              - conditions:
-                  - condition: state
-                    entity_id: !input sonoff_sensor
-                    state: "button_2_double"
-                sequence: !input button_2_double
+      - conditions:
+          - condition: state
+            entity_id: !input sonoff_sensor
+            state: "button_3_double"
+        sequence: !input button_3_double
 
-              - conditions:
-                  - condition: state
-                    entity_id: !input sonoff_sensor
-                    state: "button_3_double"
-                sequence: !input button_3_double
+      - conditions:
+          - condition: state
+            entity_id: !input sonoff_sensor
+            state: "button_1_hold"
+        sequence: !input button_1_hold
 
-              - conditions:
-                  - condition: state
-                    entity_id: !input sonoff_sensor
-                    state: "button_1_hold"
-                sequence: !input button_1_hold
+      - conditions:
+          - condition: state
+            entity_id: !input sonoff_sensor
+            state: "button_2_hold"
+        sequence: !input button_2_hold
 
-              - conditions:
-                  - condition: state
-                    entity_id: !input sonoff_sensor
-                    state: "button_2_hold"
-                sequence: !input button_2_hold
-
-              - conditions:
-                  - condition: state
-                    entity_id: !input sonoff_sensor
-                    state: "button_3_hold"
-                sequence: !input button_3_hold
+      - conditions:
+          - condition: state
+            entity_id: !input sonoff_sensor
+            state: "button_3_hold"
+        sequence: !input button_3_hold
