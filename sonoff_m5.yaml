@@ -1,94 +1,87 @@
 blueprint:
-  name: Sonoff M5 3-Gang Button Controller
+  name: Sonoff M5 3-Gang Switch Controller
   description: |
-    Use the Sonoff M5 3-Gang smart switch to control lights, switches, or scenes.
-    - Each gang (button) supports single, double, and hold press actions.
-    - Requires the "Sonoff LAN" HACS integration in auto mode.
+    Control automations using the Sonoff M5 3-Gang smart switch.
+
+    - Each gang supports ON, OFF, and TOGGLE triggers.
+    - Works with Sonoff LAN HACS integration.
+    - Assign individual actions to each gang and switch state.
+
   domain: automation
   author: Kamil Kara
   input:
-    sonoff_sensor:
-      name: Sonoff M5 Sensor
-      description: "Select the Sonoff M5 sensor entity"
+    switch_1:
+      name: Switch 1
       selector:
         entity:
-          domain: sensor
-          integration: sonoff
-
-    ### ☝️ SINGLE PRESS ACTIONS
-    single_press_header:
-      name: "☝️ SINGLE PRESS ACTIONS"
-      description: "Define actions for each gang single press"
-      default: "Informational field — do not change"
+          domain: switch
+          multiple: false
+    switch_2:
+      name: Switch 2
       selector:
-        text: {}
+        entity:
+          domain: switch
+          multiple: false
+    switch_3:
+      name: Switch 3
+      selector:
+        entity:
+          domain: switch
+          multiple: false
 
-    button_1_single:
-      name: Button 1 - Single Press
+    ### Switch 1 Actions
+    switch_1_on:
+      name: Switch 1 - Turned ON
       default: []
       selector:
         action: {}
 
-    button_2_single:
-      name: Button 2 - Single Press
+    switch_1_off:
+      name: Switch 1 - Turned OFF
       default: []
       selector:
         action: {}
 
-    button_3_single:
-      name: Button 3 - Single Press
+    switch_1_toggle:
+      name: Switch 1 - Toggled
       default: []
       selector:
         action: {}
 
-    ### ✌️ DOUBLE PRESS ACTIONS
-    double_press_header:
-      name: "✌️ DOUBLE PRESS ACTIONS"
-      description: "Define actions for each gang double press"
-      default: "Informational field — do not change"
-      selector:
-        text: {}
-
-    button_1_double:
-      name: Button 1 - Double Press
+    ### Switch 2 Actions
+    switch_2_on:
+      name: Switch 2 - Turned ON
       default: []
       selector:
         action: {}
 
-    button_2_double:
-      name: Button 2 - Double Press
+    switch_2_off:
+      name: Switch 2 - Turned OFF
       default: []
       selector:
         action: {}
 
-    button_3_double:
-      name: Button 3 - Double Press
+    switch_2_toggle:
+      name: Switch 2 - Toggled
       default: []
       selector:
         action: {}
 
-    ### ✋ HOLD PRESS ACTIONS
-    hold_press_header:
-      name: "✋ HOLD PRESS ACTIONS"
-      description: "Define actions for each gang hold press"
-      default: "Informational field — do not change"
-      selector:
-        text: {}
-
-    button_1_hold:
-      name: Button 1 - Hold
+    ### Switch 3 Actions
+    switch_3_on:
+      name: Switch 3 - Turned ON
       default: []
       selector:
         action: {}
 
-    button_2_hold:
-      name: Button 2 - Hold
+    switch_3_off:
+      name: Switch 3 - Turned OFF
       default: []
       selector:
         action: {}
 
-    button_3_hold:
-      name: Button 3 - Hold
+    switch_3_toggle:
+      name: Switch 3 - Toggled
       default: []
       selector:
         action: {}
@@ -99,79 +92,85 @@ blueprint:
       selector:
         select:
           options:
-            - "single"
-            - "queued"
-            - "restart"
-            - "parallel"
+            - single
+            - queued
+            - restart
+            - parallel
 
 mode: !input automation_mode
 
 trigger:
   - platform: state
-    entity_id: !input sonoff_sensor
-    to:
-      - "button_1_single"
-      - "button_1_double"
-      - "button_1_hold"
-      - "button_2_single"
-      - "button_2_double"
-      - "button_2_hold"
-      - "button_3_single"
-      - "button_3_double"
-      - "button_3_hold"
+    entity_id: !input switch_1
+  - platform: state
+    entity_id: !input switch_2
+  - platform: state
+    entity_id: !input switch_3
 
 action:
   - choose:
+      # Switch 1
       - conditions:
+          - condition: trigger
+            id: switch_1
           - condition: state
-            entity_id: !input sonoff_sensor
-            state: "button_1_single"
-        sequence: !input button_1_single
+            entity_id: !input switch_1
+            state: "on"
+        sequence: !input switch_1_on
 
       - conditions:
+          - condition: trigger
+            id: switch_1
           - condition: state
-            entity_id: !input sonoff_sensor
-            state: "button_2_single"
-        sequence: !input button_2_single
+            entity_id: !input switch_1
+            state: "off"
+        sequence: !input switch_1_off
 
       - conditions:
+          - condition: trigger
+            id: switch_1
+        sequence: !input switch_1_toggle
+
+      # Switch 2
+      - conditions:
+          - condition: trigger
+            id: switch_2
           - condition: state
-            entity_id: !input sonoff_sensor
-            state: "button_3_single"
-        sequence: !input button_3_single
+            entity_id: !input switch_2
+            state: "on"
+        sequence: !input switch_2_on
 
       - conditions:
+          - condition: trigger
+            id: switch_2
           - condition: state
-            entity_id: !input sonoff_sensor
-            state: "button_1_double"
-        sequence: !input button_1_double
+            entity_id: !input switch_2
+            state: "off"
+        sequence: !input switch_2_off
 
       - conditions:
+          - condition: trigger
+            id: switch_2
+        sequence: !input switch_2_toggle
+
+      # Switch 3
+      - conditions:
+          - condition: trigger
+            id: switch_3
           - condition: state
-            entity_id: !input sonoff_sensor
-            state: "button_2_double"
-        sequence: !input button_2_double
+            entity_id: !input switch_3
+            state: "on"
+        sequence: !input switch_3_on
 
       - conditions:
+          - condition: trigger
+            id: switch_3
           - condition: state
-            entity_id: !input sonoff_sensor
-            state: "button_3_double"
-        sequence: !input button_3_double
+            entity_id: !input switch_3
+            state: "off"
+        sequence: !input switch_3_off
 
       - conditions:
-          - condition: state
-            entity_id: !input sonoff_sensor
-            state: "button_1_hold"
-        sequence: !input button_1_hold
-
-      - conditions:
-          - condition: state
-            entity_id: !input sonoff_sensor
-            state: "button_2_hold"
-        sequence: !input button_2_hold
-
-      - conditions:
-          - condition: state
-            entity_id: !input sonoff_sensor
-            state: "button_3_hold"
-        sequence: !input button_3_hold
+          - condition: trigger
+            id: switch_3
+        sequence: !input switch_3_toggle
