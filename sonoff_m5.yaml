@@ -1,44 +1,43 @@
 blueprint:
-  name: Sonoff M5 3-Gang Switch Controller (Filtered by Device)
+  name: Sonoff M5 3-Gang Switch Controller
   description: |
     Control automations using the Sonoff M5 3-Gang smart switch.
 
-    - Select your M5 device once.
+    - Select your M5 device (optional visual aid).
     - Each gang supports ON, OFF, and TOGGLE triggers.
-    - Works with Sonoff LAN HACS integration.
     - Assign individual actions to each gang and switch state.
+    - Requires Sonoff LAN HACS integration.
 
   domain: automation
   author: Kamil Kara
   input:
     device_m5:
       name: Sonoff M5 Device
-      description: Select your M5 3-Gang device
+      description: Select your Sonoff M5 3-Gang device (for reference only)
       selector:
         device:
           integration: sonoff
-          manufacturer: SONOFF
 
     switch_1:
       name: Gang 1 Switch
+      description: Select the first gang (switch entity)
       selector:
         entity:
           domain: switch
-          device: !input device_m5
 
     switch_2:
       name: Gang 2 Switch
+      description: Select the second gang (switch entity)
       selector:
         entity:
           domain: switch
-          device: !input device_m5
 
     switch_3:
       name: Gang 3 Switch
+      description: Select the third gang (switch entity)
       selector:
         entity:
           domain: switch
-          device: !input device_m5
 
     # Switch 1 Actions
     switch_1_on:
@@ -122,66 +121,48 @@ action:
   - choose:
       # Switch 1
       - conditions:
-          - condition: trigger
-            id: switch_1
-          - condition: state
-            entity_id: !input switch_1
-            state: "on"
+          - condition: template
+            value_template: "{{ trigger.entity_id == (input('switch_1') | string) and trigger.to_state.state == 'on' }}"
         sequence: !input switch_1_on
 
       - conditions:
-          - condition: trigger
-            id: switch_1
-          - condition: state
-            entity_id: !input switch_1
-            state: "off"
+          - condition: template
+            value_template: "{{ trigger.entity_id == (input('switch_1') | string) and trigger.to_state.state == 'off' }}"
         sequence: !input switch_1_off
 
       - conditions:
-          - condition: trigger
-            id: switch_1
+          - condition: template
+            value_template: "{{ trigger.entity_id == (input('switch_1') | string) }}"
         sequence: !input switch_1_toggle
 
       # Switch 2
       - conditions:
-          - condition: trigger
-            id: switch_2
-          - condition: state
-            entity_id: !input switch_2
-            state: "on"
+          - condition: template
+            value_template: "{{ trigger.entity_id == (input('switch_2') | string) and trigger.to_state.state == 'on' }}"
         sequence: !input switch_2_on
 
       - conditions:
-          - condition: trigger
-            id: switch_2
-          - condition: state
-            entity_id: !input switch_2
-            state: "off"
+          - condition: template
+            value_template: "{{ trigger.entity_id == (input('switch_2') | string) and trigger.to_state.state == 'off' }}"
         sequence: !input switch_2_off
 
       - conditions:
-          - condition: trigger
-            id: switch_2
+          - condition: template
+            value_template: "{{ trigger.entity_id == (input('switch_2') | string) }}"
         sequence: !input switch_2_toggle
 
       # Switch 3
       - conditions:
-          - condition: trigger
-            id: switch_3
-          - condition: state
-            entity_id: !input switch_3
-            state: "on"
+          - condition: template
+            value_template: "{{ trigger.entity_id == (input('switch_3') | string) and trigger.to_state.state == 'on' }}"
         sequence: !input switch_3_on
 
       - conditions:
-          - condition: trigger
-            id: switch_3
-          - condition: state
-            entity_id: !input switch_3
-            state: "off"
+          - condition: template
+            value_template: "{{ trigger.entity_id == (input('switch_3') | string) and trigger.to_state.state == 'off' }}"
         sequence: !input switch_3_off
 
       - conditions:
-          - condition: trigger
-            id: switch_3
+          - condition: template
+            value_template: "{{ trigger.entity_id == (input('switch_3') | string) }}"
         sequence: !input switch_3_toggle
