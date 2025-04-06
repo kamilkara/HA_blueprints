@@ -1,8 +1,9 @@
 blueprint:
-  name: Sonoff M5 3-Gang Switch Controller
+  name: Sonoff M5 3-Gang Switch Controller (Filtered by Device)
   description: |
     Control automations using the Sonoff M5 3-Gang smart switch.
 
+    - Select your M5 device once.
     - Each gang supports ON, OFF, and TOGGLE triggers.
     - Works with Sonoff LAN HACS integration.
     - Assign individual actions to each gang and switch state.
@@ -10,26 +11,36 @@ blueprint:
   domain: automation
   author: Kamil Kara
   input:
-    switch_1:
-      name: Switch 1
+    device_m5:
+      name: Sonoff M5 Device
+      description: Select your M5 3-Gang device
       selector:
-        entity:
-          domain: switch
-          multiple: false
-    switch_2:
-      name: Switch 2
-      selector:
-        entity:
-          domain: switch
-          multiple: false
-    switch_3:
-      name: Switch 3
-      selector:
-        entity:
-          domain: switch
-          multiple: false
+        device:
+          integration: sonoff
+          manufacturer: SONOFF
 
-    ### Switch 1 Actions
+    switch_1:
+      name: Gang 1 Switch
+      selector:
+        entity:
+          domain: switch
+          device: !input device_m5
+
+    switch_2:
+      name: Gang 2 Switch
+      selector:
+        entity:
+          domain: switch
+          device: !input device_m5
+
+    switch_3:
+      name: Gang 3 Switch
+      selector:
+        entity:
+          domain: switch
+          device: !input device_m5
+
+    # Switch 1 Actions
     switch_1_on:
       name: Switch 1 - Turned ON
       default: []
@@ -48,7 +59,7 @@ blueprint:
       selector:
         action: {}
 
-    ### Switch 2 Actions
+    # Switch 2 Actions
     switch_2_on:
       name: Switch 2 - Turned ON
       default: []
@@ -67,7 +78,7 @@ blueprint:
       selector:
         action: {}
 
-    ### Switch 3 Actions
+    # Switch 3 Actions
     switch_3_on:
       name: Switch 3 - Turned ON
       default: []
